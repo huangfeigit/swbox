@@ -26,7 +26,7 @@ class CMainWindows(QWidget):
         self.m_ComBoxLayout.setContentsMargins(10, 10, 10, 10)  # 设置此子布局和内部控件的间距为10px
 
         oLabel = QLabel(self)
-        oLabel.setText(u"当前操作：")
+        oLabel.setText("当前操作：")
         oLabel.setFixedHeight(20)
         self.m_ComBoxLayout.addWidget(oLabel)
 

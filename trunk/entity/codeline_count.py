@@ -9,7 +9,7 @@ import os
 
 class CEntity(CBaseEntity):
 
-    m_Idx = 0
+    m_Idx = 1
     m_Code = "codeline_count"
     m_Name = "代码行数统计"
 
@@ -74,11 +74,7 @@ class CEntity(CBaseEntity):
             FailMessage("目录不存在")
             return
         iTotalLines = self.m_Counter.get_count_lines(sDir)
-        self.m_ResultLabel.setText(str(iTotalLines))
-        #self.m_ProgressLabel.show()
-        #self.m_ProgressBar.show()
-
-        # QPushButton("codeline_count", self)
+        self.m_ResultLabel.setText("结果：%s" % iTotalLines)
 
 class CCounter(object):
 
@@ -88,20 +84,17 @@ class CCounter(object):
 
     def fileter_file(self, sPath):
         for root, dirs, filenames in os.walk(sPath):
-            #print(":::xxxxx:::", root, dirs, filenames)
             for filename in filenames:
                 filetype = filename.split(".")[-1]
-                #print("::>>>", filename)
                 if filetype == "py":
-                    #print(":::>>", filename, os.path.join(root, filename))
-                    self.m_FileList[os.path.join(root, filename)] = 1
+                    sTruePath = os.path.join(root, filename)
+                    self.m_FileList[sTruePath] = 1
             for ddir in dirs:
                 self.fileter_file(os.path.join(root, ddir))
 
     def count_file(self, filename):
         cnt = 0
-        for sLine in open(filename).readlines():
-            print("line:", filename, sLine)
+        for sLine in open(filename, "rb").readlines():
             sLine = sLine.strip()
             if not sLine:
                 continue
@@ -110,10 +103,8 @@ class CCounter(object):
 
     def count_lines(self):
         iTotalLines = 0
-        print("11111")
         for filename in self.m_FileList.keys():
             iTotalLines += self.count_file(filename)
-        print("22222")
         return iTotalLines
 
     def get_count_lines(self, sPath):

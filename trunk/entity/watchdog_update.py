@@ -10,7 +10,7 @@ import os
 
 class CEntity(CBaseEntity):
 
-    m_Idx = 1
+    m_Idx = 0
     m_Code = "watchdog_update"
     m_Name = "看门狗自动更新"
 
